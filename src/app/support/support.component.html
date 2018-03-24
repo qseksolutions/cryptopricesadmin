@@ -1,0 +1,143 @@
+<div class="content-wrapper">
+  <div class="container-fluid">
+    <!-- Breadcrumbs-->
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item">
+        <a href="{{urlString}}">Dashboard</a>
+      </li>
+      <li class="breadcrumb-item active">Support</li>
+    </ol>
+    <!-- Example DataTables Card-->
+    <div class="card mb-3" style=" margin-bottom: 6% !important; ">
+      <div class="card-header">
+        <i class="fa fa-table"></i> FAQ List
+        <button class="btn btn-primary pull-right" (click)="addcategory()">Add Category</button>
+        <button class="btn btn-primary pull-right" style="margin-right: 1%;" (click)="addquestion()">Add Question</button>
+      </div>
+      <div class="card-body">
+        <div class="table-responsive">
+          <table class="table table-bordered" id="supportlist" width="100%" cellspacing="0">
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>Category Name</th>
+                <th>Question</th>
+                <th>Anwser</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tfoot>
+              <tr>
+                <th>#</th>
+                <th>Category Name</th>
+                <th>Question</th>
+                <th>Anwser</th>
+                <th>Action</th>
+              </tr>
+            </tfoot>
+            <tbody>
+              <tr *ngFor="let qus of allquestion; let i = index">
+                <td>{{i+1}}</td>
+                <td>{{qus.category_name}}</td>
+                <td>{{qus.question}}</td>
+                <td><p [innerHtml]="qus.answer"></p></td>
+                <td class="text-center">
+                  <a class="mr-10" href="javascript:;" (click)="updatesupport(qus.id)"> <i class="fa fa-edit"></i> </a>
+                  <a href="javascript:;" (click)="deletesupport(qus.id)"> <i class="fa fa-times red"></i> </a>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ADD CATEGORY MODAL -->
+<div id="addcategorymodal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title pull-left">Add New Category</h4>
+        <button type="button" class="close no-mb no-pd pull-right" data-dismiss="modal">&times;</button>
+      </div>
+      <div class="modal-body row">
+        <div class="card-body">
+          <form>
+            <div class="form-group">
+              <div class="form-row">
+                <div class="col-md-12">
+                  <label>Category Name</label>
+                  <input class="form-control" type="text" placeholder="Enter category name" name="category" [(ngModel)]="category">
+                </div>
+              </div>
+            </div>
+            <div class="col-md-12" style="padding: 0;">
+              <button type="button" class="btn btn-default pull-right" data-dismiss="modal">Close</button>
+              <button type="submit" class="btn btn-success pull-right mr-10" (click)="onSubmitaddCategory()">Add Category</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ADD QUESTION MODAL -->
+<div id="addquestionmodal" class="modal fade" role="dialog">
+  <div class="modal-dialog modal-lg">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title pull-left">Add New Question</h4>
+        <button type="button" class="close no-mb no-pd pull-right" data-dismiss="modal">&times;</button>
+      </div>
+      <div class="modal-body row">
+        <div class="card-body">
+          <form>
+            <div class="form-group">
+              <div class="form-row">
+                <div class="col-md-12">
+                  <label>Select Category</label>
+                  <select class="form-control" name="catid" [(ngModel)]="qus.catid" id="catid">
+                    <option value="">Select</option>
+                    <option *ngFor="let category of allcategory" value="{{category.id}}">{{category.category_name}}</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+            <div class="form-group">
+              <div class="form-row">
+                <div class="col-md-12">
+                  <label>Question</label>
+                  <input class="form-control" id="question" type="text" placeholder="Enter question" name="question" [(ngModel)]="qus.question">
+                </div>
+              </div>
+            </div>
+            <div class="form-group">
+              <div class="form-row">
+                <div class="col-md-12">
+                  <label>Answer</label>
+                  <!-- <textarea class="form-control" type="text" id="answer" placeholder="Enter answer" name="answer" [(ngModel)]="qus.answer" row="5"></textarea> -->
+                  <ckeditor id="answer" name="answer" [(ngModel)]="qus.answer" [readonly]="false" debounce="500">
+                  </ckeditor>
+                </div>
+              </div>
+            </div>
+            <input type="hidden" id="support_id" name="support_id" [(ngModel)]="qus.support_id">
+            <div class="col-md-12" style="padding: 0;">
+              <button type="button" class="btn btn-default pull-right" data-dismiss="modal">Close</button>
+              <button type="submit" class="btn btn-success pull-right mr-10" (click)="onSubmitaddQuestion()">{{sid == 0 ? 'Add' : 'Update'}}</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>

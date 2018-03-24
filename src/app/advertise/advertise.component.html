@@ -1,0 +1,159 @@
+<div class="content-wrapper">
+  <div class="container-fluid">
+    <!-- Breadcrumbs-->
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item">
+        <a href="{{urlString}}">Dashboard</a>
+      </li>
+      <li class="breadcrumb-item active">Advertise</li>
+    </ol>
+    <!-- Example DataTables Card-->
+    <div class="card mb-3" style=" margin-bottom: 6% !important; ">
+      <div class="card-header">
+        <i class="fa fa-table"></i> Advertise List
+        <button class="btn btn-primary pull-right" (click)="addcategory()">Add Advertise Place</button>
+        <button class="btn btn-primary pull-right" style="margin-right: 1%;" (click)="addadvertise()">Add Advertise</button>
+      </div>
+      <div class="card-body">
+        <div class="table-responsive">
+          <table class="table table-bordered" id="addlist" width="100%" cellspacing="0">
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>Name</th>
+                <th>Default</th>
+                <th>Custom</th>
+                <th>Status</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tfoot>
+              <tr>
+                <th>#</th>
+                <th>Name</th>
+                <th>Default</th>
+                <th>Custom</th>
+                <th>Status</th>
+                <th>Action</th>
+              </tr>
+            </tfoot>
+            <tbody>
+              <tr *ngFor="let add of advertise; let i = index">
+                <td>{{i+1}}</td>
+                <td>{{add.name}}</td>
+                <!-- <td>{{add.default_ad}}</td>
+                <td>{{add.custom_ad}}</td> -->
+                <td>
+                  <p [innerHtml]="add.default_ad"></p>
+                </td>
+                <td>
+                  <p [innerHtml]="add.custom_ad"></p>
+                </td>
+                <td>
+                  <span *ngIf="add.status == 1" class="label label-success">Active</span>
+                  <span *ngIf="add.status == 0" class="label label-danger">Inactive</span>
+                </td>
+                <td class="text-center">
+                  <a class="mr-10" href="javascript:;" (click)="updateadvertise(add.id)">
+                    <i class="fa fa-edit"></i>
+                  </a>
+                  <a href="javascript:;" (click)="deleteadvertise(add.id)">
+                    <i class="fa fa-times red"></i>
+                  </a>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ADD CATEGORY MODAL -->
+<div id="addcategorymodal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title pull-left">Add New Advertise Place</h4>
+        <button type="button" class="close no-mb no-pd pull-right" data-dismiss="modal">&times;</button>
+      </div>
+      <div class="modal-body row">
+        <div class="card-body">
+          <form>
+            <div class="form-group">
+              <div class="form-row">
+                <div class="col-md-12">
+                  <label>Advertise Place</label>
+                  <input class="form-control" type="text" placeholder="Enter advertise place" name="category" [(ngModel)]="category">
+                </div>
+              </div>
+            </div>
+            <div class="col-md-12" style="padding: 0;">
+              <button type="button" class="btn btn-default pull-right" data-dismiss="modal">Close</button>
+              <button type="submit" class="btn btn-success pull-right mr-10" (click)="onSubmitaddPlace()">Add Advertise Place</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ADD ADVERTISE MODAL -->
+<div id="addadvertisemodal" class="modal fade" role="dialog">
+  <!-- <div class="modal-dialog modal-lg"> -->
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title pull-left">Add New Advertise</h4>
+        <button type="button" class="close no-mb no-pd pull-right" data-dismiss="modal">&times;</button>
+      </div>
+      <div class="modal-body row">
+        <div class="card-body">
+          <form>
+            <div class="form-group">
+              <div class="form-row">
+                <div class="col-md-12">
+                  <label>Select Advertise Place</label>
+                  <select class="form-control" name="catid" [(ngModel)]="add.catid" id="catid">
+                    <option value="">Select</option>
+                    <option *ngFor="let category of allcategory" value="{{category.id}}">{{category.name}}</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+            <div class="form-group">
+              <div class="form-row">
+                <div class="col-md-12">
+                  <label>Deafult</label>
+                  <textarea class="form-control" rows="5" type="text" id="deafult" placeholder="Enter deafult advertise" name="deafult" [(ngModel)]="add.deafult"></textarea>
+                </div>
+              </div>
+            </div>
+            <div class="form-group">
+              <div class="form-row">
+                <div class="col-md-12">
+                  <label>Custom</label>
+                  <textarea class="form-control" rows="5" type="text" id="custom" placeholder="Enter custom advertise" name="custom" [(ngModel)]="add.custom"
+                    row="5"></textarea>
+                </div>
+              </div>
+            </div>
+            <input type="hidden" id="add_id" name="add_id" [(ngModel)]="add.add_id">
+            <div class="col-md-12" style="padding: 0;">
+              <button type="button" class="btn btn-default pull-right" data-dismiss="modal">Close</button>
+              <button type="submit" class="btn btn-success pull-right mr-10" (click)="onSubmitaddAdvertise()">{{aid == 0 ? 'Add' : 'Update'}}</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>

@@ -1,0 +1,127 @@
+<div class="content-wrapper">
+  <div class="container-fluid">
+    <!-- Breadcrumbs-->
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item">
+        <a href="{{urlString}}">Dashboard</a>
+      </li>
+      <li class="breadcrumb-item active">SEO</li>
+    </ol>
+    <!-- Example DataTables Card-->
+    <div class="card mb-3" style=" margin-bottom: 6% !important; ">
+      <div class="card-header">
+        <i class="fa fa-table"></i> SEO Meta List
+        <button class="btn btn-primary pull-right" (click)="addseometa()">Add SEO Meta</button>
+      </div>
+      <div class="card-body">
+        <div class="table-responsive">
+          <table class="table table-bordered" id="seolist" width="100%" cellspacing="0">
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>url</th>
+                <th>title</th>
+                <th>description</th>
+                <th>keywords</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tfoot>
+              <tr>
+                <th>#</th>
+                <th>URL</th>
+                <th>Title</th>
+                <th>Description</th>
+                <th>Keywords</th>
+                <th>Action</th>
+              </tr>
+            </tfoot>
+            <tbody>
+              <tr *ngFor="let seo of allseo; let i = index">
+                <td>{{i+1}}</td>
+                <td>{{seo.url}}</td>
+                <td>{{seo.title}}</td>
+                <td>{{seo.description}}</td>
+                <td>{{seo.keywords}}</td>
+                <td class="text-center">
+                  <a class="mr-10" href="javascript:;" (click)="updateseometa(seo.id)">
+                    <i class="fa fa-edit"></i>
+                  </a>
+                  <a href="javascript:;" (click)="seometadelete(seo.id)">
+                    <i class="fa fa-times red"></i>
+                  </a>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ADD SEO META MODAL -->
+<div id="addseometamodal" class="modal fade" role="dialog">
+  <div class="modal-dialog modal-lg">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title pull-left">Add New SEO Meta</h4>
+        <button type="button" class="close no-mb no-pd pull-right" data-dismiss="modal">&times;</button>
+      </div>
+      <div class="modal-body row">
+        <div class="card-body">
+          <form>
+            <div class="form-group">
+              <div class="form-row">
+                <div class="col-md-12">
+                  <label>URL</label>
+                  <input class="form-control" id="url" type="text" placeholder="Enter url" name="url" [(ngModel)]="seo.url">
+                </div>
+              </div>
+            </div>
+            <div class="form-group">
+              <div class="form-row">
+                <div class="col-md-12">
+                  <label>Test URL</label>
+                  <input class="form-control" id="test_url" type="text" placeholder="Enter test url" name="test_url" [(ngModel)]="seo.test_url">
+                </div>
+              </div>
+            </div>
+            <div class="form-group">
+              <div class="form-row">
+                <div class="col-md-12">
+                  <label>Title</label>
+                  <input class="form-control" id="title" type="text" placeholder="Enter title" name="title" [(ngModel)]="seo.title">
+                </div>
+              </div>
+            </div>
+            <div class="form-group">
+              <div class="form-row">
+                <div class="col-md-12">
+                  <label>Keywords</label>
+                  <input class="form-control" id="keywords" type="text" placeholder="Enter keywords" name="keywords" [(ngModel)]="seo.keywords">
+                </div>
+              </div>
+            </div>
+            <div class="form-group">
+              <div class="form-row">
+                <div class="col-md-12">
+                  <label>Description</label>
+                  <textarea class="form-control" type="text" id="description" placeholder="Enter description" name="description" [(ngModel)]="seo.description" row="5"></textarea>
+                </div>
+              </div>
+            </div>
+            <input type="hidden" id="seo_id" name="seo_id" [(ngModel)]="seo.seo_id">
+            <div class="col-md-12" style="padding: 0;">
+              <button type="button" class="btn btn-default pull-right" data-dismiss="modal">Close</button>
+              <button type="submit" class="btn btn-success pull-right mr-10" (click)="onSubmitaddSeoMeta()">{{sid == 0 ? 'Add' : 'Update'}}</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>

@@ -1,0 +1,58 @@
+<div class="content-wrapper">
+  <div class="container-fluid">
+    <!-- Breadcrumbs-->
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item">
+        <a href="{{urlString}}">Dashboard</a>
+      </li>
+      <li class="breadcrumb-item active">Coin</li>
+    </ol>
+    <!-- Example DataTables Card-->
+    <div class="card mb-3" style=" margin-bottom: 6% !important; ">
+      <div class="card-header">
+        <i class="fa fa-table"></i> Coinlist</div>
+      <div class="card-body">
+        <div class="table-responsive">
+          <table class="table table-bordered" id="coinlist" width="100%" cellspacing="0">
+            <thead>
+              <tr>
+                <th>Rank</th>
+                <th>Image</th>
+                <th>Name</th>
+                <th>ID</th>
+                <th>Symbol</th>
+                <th>Price in USD</th>
+                <th>Status</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tfoot>
+              <tr>
+                <th>Rank</th>
+                <th>Image</th>
+                <th>Name</th>
+                <th>ID</th>
+                <th>Symbol</th>
+                <th>Price in USD</th>
+                <th>Status</th>
+                <th>Action</th>
+              </tr>
+            </tfoot>
+            <tbody>
+              <tr *ngFor="let coin of allcoin">
+                <td>{{coin.rank}}</td>
+                <td><img src="assets/currency-svg/{{coin.symbol | lowercase}}.svg" (error)="errorHandler($event,coin.symbol)" width="25" height="25"></td>
+                <td>{{coin.name}}</td>
+                <td>{{coin.id}}</td>
+                <td>{{coin.symbol}}</td>
+                <td>{{coin.price_usd | number : '1.2-2'}}</td>
+                <td>{{coin.coin_status}}</td>
+                <td><a *ngIf="coin.coin_status == 0" href="javascript:;" (click)="updatestatus(coin.id)"><i class="fa fa-check"></i></a></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

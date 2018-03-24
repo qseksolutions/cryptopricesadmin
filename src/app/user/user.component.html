@@ -1,0 +1,182 @@
+<div class="content-wrapper">
+  <div class="container-fluid">
+    <!-- Breadcrumbs-->
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item">
+        <a href="{{base_url}}">Dashboard</a>
+      </li>
+      <li class="breadcrumb-item active">Users</li>
+    </ol>
+    <!-- Example DataTables Card-->
+    <div class="card mb-3" style=" margin-bottom: 6% !important; ">
+      <div class="card-header">
+        <i class="fa fa-table"></i> Users List
+        <!-- <button class="btn btn-primary pull-right" style="margin-right: 1%;" (click)="addnewuser()">Add User</button> -->
+      </div>
+      <div class="card-body">
+        <div class="table-responsive">
+          <table class="table table-bordered" id="userslist" width="100%" cellspacing="0">
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Base Currency</th>
+                <th>Status</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tfoot>
+              <tr>
+                <th>#</th>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Base Currency</th>
+                <th>Status</th>
+                <th>Action</th>
+              </tr>
+            </tfoot>
+            <tbody>
+              <tr *ngFor="let user of allusers; let i = index">
+                <td>{{i+1}}</td>
+                <td>{{user.name}}</td>
+                <td>{{user.email}}</td>
+                <td>{{user.d_currency}}</td>
+                <td>
+                  <span *ngIf="user.status == 1" class="label label-success">Active</span>
+                  <span *ngIf="user.status == 0" class="label label-warning">Inactive</span>
+                  <span *ngIf="user.status == 2" class="label label-danger">Block</span>
+                </td>
+                <td class="text-center">
+                  <a class="mr-10" href="javascript:;" (click)="viewuser(user.id)">
+                    <i class="fa fa-eye"></i>
+                  </a>
+                  <a class="mr-10" href="javascript:;" (click)="updatesuser(user.id)">
+                    <i class="fa fa-edit"></i>
+                  </a>
+                  <a href="javascript:;" (click)="deleteuser(user.id)">
+                    <i class="fa fa-times red"></i>
+                  </a>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ADD CATEGORY MODAL -->
+<div id="updateusermodal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title pull-left">Update user details</h4>
+        <button type="button" class="close no-mb no-pd pull-right" data-dismiss="modal">&times;</button>
+      </div>
+      <div class="modal-body row">
+        <div class="card-body">
+          <form>
+            <input type="hidden" id="user_id" name="user_id" [(ngModel)]="user.user_id" />
+            <div class="form-group">
+              <div class="form-row">
+                <div class="col-md-12">
+                  <label>Name</label>
+                  <input class="form-control" type="text" placeholder="Enter name" id="name" name="name" [(ngModel)]="user.name">
+                </div>
+              </div>
+              <div class="form-row">
+                <div class="col-md-12">
+                  <label>Email</label>
+                  <input class="form-control" type="text" placeholder="Enter email" id="email" name="email" [(ngModel)]="user.email">
+                </div>
+              </div>
+              <div class="form-row" style="margin-top: 2%;">
+                <div class="col-md-12">
+                  <label class="custom-control custom-radio">
+                    <input type="radio" class="custom-control-input" id="status1" name="status" value="1" [(ngModel)]="user.status">
+                    <span class="custom-control-indicator"></span>
+                    <span class="custom-control-description">Active</span>
+                  </label>
+                  <label class="custom-control custom-radio">
+                    <input type="radio" class="custom-control-input" id="status0" name="status" value="0" [(ngModel)]="user.status">
+                    <span class="custom-control-indicator"></span>
+                    <span class="custom-control-description">Inactive</span>
+                  </label>
+                  <label class="custom-control custom-radio">
+                    <input type="radio" class="custom-control-input" id="status2" name="status" value="2" [(ngModel)]="user.status">
+                    <span class="custom-control-indicator"></span>
+                    <span class="custom-control-description">Block</span>
+                  </label>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-12" style="padding: 0;">
+              <button type="button" class="btn btn-default pull-right" data-dismiss="modal">Close</button>
+              <button type="submit" class="btn btn-success pull-right mr-10" (click)="onSubmitUpdateUser()">Update Details</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<div id="viewusermodal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title pull-left">View user details</h4>
+        <button type="button" class="close no-mb no-pd pull-right" data-dismiss="modal">&times;</button>
+      </div>
+      <div class="modal-body row">
+        <div class="card-body">
+          <form>
+            <div class="form-group">
+              <div class="form-row">
+                <div class="col-md-12">
+                  <label><b>Name</b></label>
+                  <p id="name_view"></p>
+                </div>
+              </div>
+              <div class="form-row">
+                <div class="col-md-12">
+                  <label><b>Email</b></label>
+                  <p id="email_view"></p>
+                </div>
+              </div>
+              <div class="form-row">
+                <div class="col-md-12">
+                  <label><b>Deafult Currency</b></label>
+                  <p id="currency_view"></p>
+                </div>
+              </div>
+              <div class="form-row">
+                <div class="col-md-12">
+                  <label><b>User Type</b></label>
+                  <p id="type_view"></p>
+                </div>
+              </div>
+              <div class="form-row">
+                <div class="col-md-12">
+                  <label><b>Status</b></label>
+                  <p id="status_view"></p>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-12" style="padding: 0;">
+              <!-- <button type="button" class="btn btn-default pull-right" data-dismiss="modal">Close</button> -->
+              <!-- <button type="submit" class="btn btn-success pull-right mr-10" (click)="onSubmitUpdateUser()">Update Details</button> -->
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
