@@ -40,8 +40,8 @@
               <tr *ngFor="let news of allnews; let i = index">
                 <td>{{i+1}}</td>
                 <td>{{news.title}}</td>
-                <td>{{news.source}}</td>
-                <td>{{news.short_news}}</td>
+                <td>{{news.source}} ({{news.short_news}})</td>
+                <td>{{news.long_news}}</td>
                 <td>
                   <span *ngIf="news.status == 0" class="label label-danger">Inactive</span>
                   <span *ngIf="news.status == 1" class="label label-success">Active</span>
@@ -95,15 +95,15 @@
             <div class="form-group">
               <div class="form-row">
                 <div class="col-md-12">
-                  <label>Short News</label>
-                  <textarea class="form-control" id="short_news" type="text" placeholder="Enter Short News" name="short_news" [(ngModel)]="news.short_news" rows="5"></textarea>
+                  <label>Source Link</label>
+                  <input class="form-control" id="short_news" type="text" placeholder="Enter Source Link" name="short_news" [(ngModel)]="news.short_news">
                 </div>
               </div>
             </div>
             <div class="form-group">
               <div class="form-row">
                 <div class="col-md-12">
-                  <label>Answer</label>
+                  <label>Short Description</label>
                   <ckeditor id="long_news" name="long_news" [(ngModel)]="news.long_news" [readonly]="false" debounce="500">
                   </ckeditor>
                 </div>
