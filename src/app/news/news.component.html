@@ -41,7 +41,7 @@
                 <td>{{i+1}}</td>
                 <td>{{news.title}}</td>
                 <td>{{news.source}} ({{news.short_news}})</td>
-                <td>{{news.long_news}}</td>
+                <td><p [innerHTML]="news.long_news"></p></td>
                 <td>
                   <span *ngIf="news.status == 0" class="label label-danger">Inactive</span>
                   <span *ngIf="news.status == 1" class="label label-success">Active</span>

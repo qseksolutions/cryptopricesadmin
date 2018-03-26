@@ -1,7 +1,7 @@
 export const header = '';
 export const live_url = 'https://cryptoprices.com/';
 export const test_url = 'http://localhost:4200/';
-export const base_url = 'http://localhost:4200/';
+export const base_url = 'http://administrator.cryptoprices.com/';
 export const api_url = 'http://74.124.217.247:3000/v1/';
 
 export const getallcoinlistAPI = 'getallcoinlist';
